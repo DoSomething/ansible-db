@@ -1,0 +1,7 @@
+---
+- name: Install MySQL
+  apt: name={{ item }} state=latest
+  sudo: True
+  with_items:
+    - mysql-server
+    - mysql-client
