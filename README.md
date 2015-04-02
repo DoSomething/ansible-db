@@ -3,15 +3,34 @@ DoSomething DB
 
 DoSomething.org DB server.
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Optional
+#### MySQL configuration
+You can override MySQL settings (or introduce new configuration statements)
+using the following format:
+
+```yml
+my_cnf_settings:
+  - section: mysqld
+    option: max_allowed_packet
+    value: 128M
+  - section: mysqld
+    option: character_set_server
+    value: utf8
+  - section: mysqld
+    option: collation_server
+    value: utf8_general_ci
+  - section: mysqld
+    option: innodb_file_per_table
+    value: "ON"
+  - section: mysqldump
+    option: max_allowed_packet
+    value: 128M
+```
+
+By default, nothing is overriden and package defaults are used.
 
 Dependencies
 ------------
@@ -21,11 +40,13 @@ Dependencies
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Usage example:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yml
+- hosts: servers
+  roles:
+     - { role: dosomething.db }
+```
 
 License
 -------
